@@ -10,17 +10,17 @@ plt.style.use(['science','ieee','no-latex'])
 
 catalogue_names=['A','B','C']
 method_name=['method-1','method-2','method-3','method-4','method-5']
-data=np.random.randn(5,100,3)
+data=np.random.randn(5,50,3)
 #这里面的 x,y,z分别是指4个方法,每个box计算100样本，3个总类别
 
-# plt.figure(figsize=(5,3))
+plt.figure(figsize=(4,3))
 
 K_len=len(catalogue_names) #设置横坐标
 x_loc=np.arange(K_len)
 
 
 M_len=len(method_name)     #设置各个方法的颜色
-tab_color = mpl.colormaps['tab20c'].resampled(M_len)
+tab_color = mpl.colormaps['Accent'].resampled(M_len)
 
 #设置每个类别里面的方法
 ind_ii=np.linspace(0.1,0.9,M_len+1,endpoint=True)
@@ -30,7 +30,7 @@ each_loc=ind_ii[0:-1]+0.5*(each_len)
 box_all=[]
 #同一个方法绘制同一个boxplot
 for ii in np.arange(M_len):
-    box_style=dict(facecolor=tab_color(ii))
+    box_style=dict(facecolor=tab_color(ii),linewidth=0.1)
     flier_style=dict(marker='+', markerfacecolor='none', markersize=4.5,
                   markeredgecolor='red')
     b_=plt.boxplot(data[ii],
