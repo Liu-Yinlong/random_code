@@ -1,0 +1,62 @@
+import matplotlib.pyplot as plt    
+import numpy as np
+import matplotlib as mpl
+import scienceplots
+plt.style.use(['science','ieee','no-latex'])
+
+# from matplotlib.font_manager import fontManager
+# fontManager.addfont(r'C:/Windows/fonts/texgyreheros-regular.otf')
+# plt.rcParams['font.family']=['TeX Gyre Heros']#好看的字体
+
+catalogue_names=['A','B','C']
+method_name=['method-1','method-2','method-3','method-4','method-5']
+data=np.random.randn(5,100,3)
+#这里面的 x,y,z分别是指4个方法,每个box计算100样本，3个总类别
+
+# plt.figure(figsize=(5,3))
+
+K_len=len(catalogue_names) #设置横坐标
+x_loc=np.arange(K_len)
+
+
+M_len=len(method_name)     #设置各个方法的颜色
+tab_color = mpl.colormaps['tab20c'].resampled(M_len)
+
+#设置每个类别里面的方法
+ind_ii=np.linspace(0.1,0.9,M_len+1,endpoint=True)
+each_len=ind_ii[1]-ind_ii[0]
+each_loc=ind_ii[0:-1]+0.5*(each_len)
+
+box_all=[]
+#同一个方法绘制同一个boxplot
+for ii in np.arange(M_len):
+    box_style=dict(facecolor=tab_color(ii))
+    flier_style=dict(marker='+', markerfacecolor='none', markersize=4.5,
+                  markeredgecolor='red')
+    b_=plt.boxplot(data[ii],
+                widths=each_len*0.8,
+                positions=x_loc+each_loc[ii],
+                patch_artist=True,
+                boxprops=box_style,
+                flierprops=flier_style,
+                )
+    box_all.append(b_['boxes'][0])
+    
+plt.axvline(0,ymin=0,ymax=1,linestyle=':',color='gray')
+for ii in np.arange(K_len):
+    plt.axvline(ii+1,ymin=0,ymax=1,linestyle=':',color='gray')
+
+
+plt.xticks(x_loc+0.5,catalogue_names)
+
+plt.grid()
+# plt.tight_layout(pad=0)
+plt.legend(handles=box_all,labels=method_name,loc=9,ncols=3,
+           bbox_to_anchor=(0.5,1.2))
+plt.savefig('x.pdf')
+
+
+
+
+
+
