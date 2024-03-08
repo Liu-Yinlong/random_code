@@ -13,7 +13,7 @@ method_name=['method-1','method-2','method-3','method-4','method-5']
 data=np.random.randn(5,50,3)
 #这里面的 x,y,z分别是指4个方法,每个box计算100样本，3个总类别
 
-plt.figure(figsize=(4,3))
+plt.figure(figsize=(5,3))
 
 K_len=len(catalogue_names) #设置横坐标
 x_loc=np.arange(K_len)
@@ -49,6 +49,7 @@ for ii in np.arange(K_len):
 
 plt.xticks(x_loc+0.5,catalogue_names)
 
+plt.xlim((x_loc[0],x_loc[-1]+1))
 plt.grid()
 # plt.tight_layout(pad=0)
 plt.legend(handles=box_all,labels=method_name,loc=9,ncols=3,
